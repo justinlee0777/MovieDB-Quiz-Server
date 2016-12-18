@@ -24,7 +24,7 @@ namespace MovieDB
 			{
 				var actor_response = GetData<MovieDBResponse>(buildUriForActorInfo(actor_param.Value)).Result;
 				var actor_id = 31;
-				if (actor_response.results.Count > 0)
+				if ( actor_response != null && actor_response.results.Count > 0)
 				{
 					actor_id = actor_response.results.ElementAt(0).id;
 				}
@@ -34,6 +34,11 @@ namespace MovieDB
 				movieDBResponse.total_pages = 1;
 				movieDBResponse.total_results = 0;
 				var results = new List<MovieDBResult>();
+				if (cast == null)
+				{
+					movieDBResponse.results = results;
+					return movieDBResponse;
+				}
 				cast.cast.ForEach(castInfo =>
 					{
 						var movie_result = GetData<MovieDBResult>(buildUriForMovie(castInfo.id)).Result;
