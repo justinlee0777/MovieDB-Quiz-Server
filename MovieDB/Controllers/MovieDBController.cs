@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using WebApi.OutputCache.V2;
 
 namespace MovieDB
 {
@@ -16,6 +17,7 @@ namespace MovieDB
 		private static string api_key = "da323c2cab7bae5c2246f0d04951e28f";
 		static HttpClient client = new HttpClient();
 
+		[CacheOutput(ServerTimeSpan = 60)]
 		public MovieDBResponse Get()
 		{
 			var query_params = Request.GetQueryNameValuePairs();
